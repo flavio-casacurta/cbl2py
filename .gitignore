@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+.gitignore
 env/
 build/
 develop-eggs/
@@ -60,3 +61,9 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+.idea

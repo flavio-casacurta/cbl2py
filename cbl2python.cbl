@@ -7,9 +7,15 @@
             05     FIELD-3 OCCURS 0002 TIMES PIC S9(3)V99.
            03      THIS-IS-ANOTHER-GROUP.
             05     YES                       PIC X(5) VALUE 'NO'.
+           03      THIS-IS-ELEMENTARY        PIC 9(5).
        01  FILLER  PIC X(30) VALUE 'END WORKING STORAGE SECTION'.
 
        PROCEDURE DIVISION.
        MAIN-SECTION SECTION.
        MAIN-L.
            INITIALIZE EXAMPLE-GROUP
+           MOVE 5 TO THIS-IS-ELEMENTARY
+           MOVE 'YES' TO YES
+           IF YES EQUAL TO 'YES'
+              GOBACK
+           END-IF.

@@ -7,23 +7,35 @@
             05     FIELD-3 OCCURS 0002 TIMES PIC S9(3)V99.
            03      THIS-IS-ANOTHER-GROUP.
             05     YES                       PIC X(5) VALUE 'NO'.
+           03      THIS-IS-ELEMENTARY        PIC 9(5).
        01  FILLER  PIC X(30) VALUE 'END WORKING STORAGE SECTION'.
 
        PROCEDURE DIVISION.
        MAIN-SECTION SECTION.
        MAIN-L.
            INITIALIZE EXAMPLE-GROUP
+           MOVE 5 TO THIS-IS-ELEMENTARY
+           MOVE 'YES' TO YES
+           IF YES EQUAL TO 'YES'
+              GOBACK
+           END-IF.
 
 
+from statements.initialize import INITIALIZE
+
+ws = {'FILLER_1':'BEGIN WORKING STORAGE SECTION'
+     ,'EXAMPLE_GROUP':{'ANOTHER_GROUP':[{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]
+                                       ,{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]
+                                       ,{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]]
+                      ,'THIS_IS_ANOTHER_GROUP':{'YES':'NO'}
+                      ,'THIS_IS_ELEMENTARY':0}
+     ,'FILLER_2':'END WORKING STORAGE SECTION'}
 
 
-working_storage = {'FILLER_1':'BEGIN WORKING STORAGE SECTION'
-                  ,'EXAMPLE_GROUP':{'ANOTHER_GROUP':[{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]
-                                                    ,{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]
-                                                    ,{'FIELD_2':0}, [{'FIELD_3':0.0}, {'FIELD_3':0.0}]]
-                                   ,'THIS_IS_ANOTHER_GROUP':{'YES':'NO'}}
-                  ,'FILLER_2':'END WORKING STORAGE SECTION'}
-
-
-
+def procedure_division:
+    INITIALIZE()(ws['EXAMPLE_GROUP'])
+    ws['EXAMPLE_GROUP']['THIS_IS_ELEMENTARY'] = 5
+    ws['EXAMPLE_GROUP']['THIS_IS_ANOTHER_GROUP']['YES'] = 'YES'
+    if ws['EXAMPLE_GROUP']['THIS_IS_ANOTHER_GROUP']['YES'] == 'YES':
+        return True
 
